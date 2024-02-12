@@ -1,0 +1,10 @@
+--- a/web/extensions/core/colorPalette.js
++++ b/web/extensions/core/colorPalette.js
+@@ -18,6 +18,7 @@ const colorPalettes = {
+                                "LATENT": "#FF9CF9", // light pink-purple
+                                "MASK": "#81C784", // muted green
+                                "MODEL": "#B39DDB", // light lavender-purple
++                               "PREDICTION": "#30D5C8", // deep turquoise
+                                "STYLE_MODEL": "#C2FFAE", // light green-yellow
+                                "VAE": "#FF6E6E", // bright red
+                                "TAESD": "#DCC274", // cheesecake
