@@ -1,13 +1,15 @@
 # ComfyUI-Prediction
 Fully customizable Classifer Free Guidance for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
+![Custom Prediction](examples/example_1.png)
+
 Copyright 2024 by @RedHotTensors and released by [Project RedRocket](https://huggingface.co/RedRocket).
 
 # Installation
 Copy ``custom_nodes/nodes_pred.py`` into ``ComfyUI/custom_nodes``.
 
 ## Optional
-If you want beautiful teal PREDICTION edges apply ``colorPalette.js.patch`` to ``ComfyUI/web/extensions/core/colorPalette.js``.
+If you want beautiful teal PREDICTION edges like the example apply ``patches/colorPalette.js.patch`` to ``ComfyUI/web/extensions/core/colorPalette.js``.
 
 # Usage
 All custom nodes are provided under <ins>Add Node > sampling > prediction</ins>. An example workflow is in ``examples/custom_prediction.json``.
