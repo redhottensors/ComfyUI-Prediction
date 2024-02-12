@@ -1,5 +1,5 @@
 # ComfyUI-Prediction
-Fully customizable Classifer Free Guidance for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
+Fully customizable Classifier Free Guidance for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
 ![Custom Prediction](examples/example_1.png)
 
