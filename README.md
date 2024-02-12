@@ -15,8 +15,8 @@ All custom nodes are provided under <ins>Add Node > sampling > prediction</ins>.
 
 Follow these steps for fully custom prediction:
 1. You will need to use the <ins>sampling > prediction > Sample Predictions</ins> node as your sampler.
-2. The *sampler* input you will need comes from <ins>sampling > custom_sampling > samplers</ins>. Generally you'll use **KSamplerSelect**.
-3. The *sigmas* input you need comes from <ins>sampling > custom_sampling > schedulers</ins>. If you don't know what sigmas you are using, try **BasicScheduler**.
+2. The *sampler* input comes from <ins>sampling > custom_sampling > samplers</ins>. Generally you'll use **KSamplerSelect**.
+3. The *sigmas* input comes from <ins>sampling > custom_sampling > schedulers</ins>. If you don't know what sigmas you are using, try **BasicScheduler**. (NOTE: These nodes are **not** in the "sigmas" menu.)
 4. You'll need one or more prompts. Chain <ins>conditioning > CLIP Text Encode (Prompt)</ins> to <ins>sampling > prediction > Conditioned Prediction</ins> to get started.
 5. After your prediction chain, connect the result to the *noise_prediction* input of your **Sample Predictions** node.
 
