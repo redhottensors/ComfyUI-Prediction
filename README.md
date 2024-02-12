@@ -6,7 +6,7 @@ Fully customizable Classifier Free Guidance for [ComfyUI](https://github.com/com
 Copyright 2024 by @RedHotTensors and released by [Project RedRocket](https://huggingface.co/RedRocket).
 
 # Installation
-Copy [custom_nodes/nodes_pred.py](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/custom_nodes/nodes_pred.py) into ``ComfyUI/custom_nodes``.
+Clone this repo into ``ComfyUI/custom_nodes`` or use the Manager's "Install via Git URL" option.
 
 (Optional) If you want beautiful teal PREDICTION edges like the example apply [patches/colorPalette.js.patch](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/patches/colorPalette.js.patch) to ``ComfyUI/web/extensions/core/colorPalette.js``.
 
@@ -23,11 +23,11 @@ Follow these steps for fully custom prediction:
 # Predictors
 
 ## Primitive Nodes
-All other predictions can be implemeted in terms of these nodes. However, it may get a little messy.
+All other predictions can be implemented in terms of these nodes. However, it may get a little messy.
 
 **Conditioned Prediction** - Evaluate your chosen model with a prompt (conditioning). You need to pick a unique conditioning name like "positive", "negative", or "empty". (The names are arbitrary and you can choose any name, but the names may evenutally interact with ControlNet if/when it's implemented.)
 
-**Combine Predictions** - Operates on two predictions. Supports add (+), sutract (-), multiply (*), divide (/), vector projection (proj), vector rejection (oproj), min, and max.<br>
+**Combine Predictions** - Operates on two predictions. Supports add (+), subtract (-), multiply (*), divide (/), vector projection (proj), vector rejection (oproj), min, and max.<br>
 ``prediction_A <operation> prediction_B``
 
 **Scale Prediction** - Linearly scales a prediction.<br>
@@ -41,10 +41,10 @@ All other predictions can be implemeted in terms of these nodes. However, it may
 ``guidance - (guidance proj avoid_and_erase) * avoid_scale - avoid_and_erase * erase_scale``
 
 ## Prebuilt Nodes
-**CFG Prection** - Vanilla Classifer Free Guidance (CFG) with a postive prompt and a negative/empty prompt.<br>
+**CFG Prediction** - Vanilla Classifer Free Guidance (CFG) with a postive prompt and a negative/empty prompt.<br>
 ``(positive - negative) * cfg_scale + negative``
 
-**Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. This is also implmeneted less flexibly in vanially ComfyUI under <ins>_for_testing > Perp-Neg</ins>.<br>
+**Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. This is also implemented less flexibly in vanilla ComfyUI under <ins>_for_testing > Perp-Neg</ins>.<br>
 ``pos_ind = positive - empty; neg_ind = negative - empty``<br>
 ``(pos_ind - (pos_ind proj neg_ind) * neg_scale) * cfg_scale + empty``
 
