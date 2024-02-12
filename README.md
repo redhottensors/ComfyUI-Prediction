@@ -6,9 +6,9 @@ Fully customizable Classifier Free Guidance for [ComfyUI](https://github.com/com
 Copyright 2024 by @RedHotTensors and released by [Project RedRocket](https://huggingface.co/RedRocket).
 
 # Installation
-Copy ``custom_nodes/nodes_pred.py`` into ``ComfyUI/custom_nodes``.
+Copy [custom_nodes/nodes_pred.py](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/custom_nodes/nodes_pred.py) into ``ComfyUI/custom_nodes``.
 
-(Optional) If you want beautiful teal PREDICTION edges like the example apply ``patches/colorPalette.js.patch`` to ``ComfyUI/web/extensions/core/colorPalette.js``.
+(Optional) If you want beautiful teal PREDICTION edges like the example apply [patches/colorPalette.js.patch](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/patches/colorPalette.js.patch) to ``ComfyUI/web/extensions/core/colorPalette.js``.
 
 # Usage
 All custom nodes are provided under <ins>Add Node > sampling > prediction</ins>. An example workflow is in ``examples/custom_prediction.json``.
