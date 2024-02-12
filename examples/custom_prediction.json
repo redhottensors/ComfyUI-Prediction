@@ -1,0 +1,1319 @@
+{
+  "last_node_id": 72,
+  "last_link_id": 142,
+  "nodes": [
+    {
+      "id": 59,
+      "type": "CombinePredictions",
+      "pos": [
+        1413,
+        181
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prediction_A",
+          "type": "PREDICTION",
+          "link": 102,
+          "slot_index": 0
+        },
+        {
+          "name": "prediction_B",
+          "type": "PREDICTION",
+          "link": 103,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            113
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CombinePredictions"
+      },
+      "widgets_values": [
+        "A oproj B"
+      ]
+    },
+    {
+      "id": 62,
+      "type": "AvoidErasePrediction",
+      "pos": [
+        1847,
+        213
+      ],
+      "size": {
+        "0": 330,
+        "1": 102
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guidance",
+          "type": "PREDICTION",
+          "link": 113
+        },
+        {
+          "name": "avoid_and_erase",
+          "type": "PREDICTION",
+          "link": 114
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            115
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AvoidErasePrediction"
+      },
+      "widgets_values": [
+        1.05,
+        0.2
+      ]
+    },
+    {
+      "id": 58,
+      "type": "CombinePredictions",
+      "pos": [
+        1410,
+        318
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prediction_A",
+          "type": "PREDICTION",
+          "link": 100,
+          "slot_index": 0
+        },
+        {
+          "name": "prediction_B",
+          "type": "PREDICTION",
+          "link": 101,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            114
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CombinePredictions"
+      },
+      "widgets_values": [
+        "A oproj B"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "Reroute",
+      "pos": [
+        263,
+        474
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 116
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "CLIP",
+          "links": [
+            25,
+            26,
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 24,
+      "type": "LoraLoader",
+      "pos": [
+        -200,
+        455
+      ],
+      "size": {
+        "0": 353.758056640625,
+        "1": 126
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 29
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 42
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            116
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoader"
+      },
+      "widgets_values": [
+        "fluffyrock-quality-tags-v4.safetensors",
+        1,
+        1
+      ]
+    },
+    {
+      "id": 52,
+      "type": "ConditionedPrediction",
+      "pos": [
+        928,
+        182
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 75
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            102
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditionedPrediction"
+      },
+      "widgets_values": [
+        "positive"
+      ]
+    },
+    {
+      "id": 53,
+      "type": "ConditionedPrediction",
+      "pos": [
+        933,
+        294
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 78
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            100
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditionedPrediction"
+      },
+      "widgets_values": [
+        "negative"
+      ]
+    },
+    {
+      "id": 54,
+      "type": "ConditionedPrediction",
+      "pos": [
+        929,
+        405
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 82
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            101,
+            103,
+            110
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditionedPrediction"
+      },
+      "widgets_values": [
+        "empty"
+      ]
+    },
+    {
+      "id": 56,
+      "type": "CFGPrediction",
+      "pos": [
+        2245,
+        516
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 86
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 87
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CFGPrediction"
+      },
+      "widgets_values": [
+        6
+      ]
+    },
+    {
+      "id": 72,
+      "type": "Reroute",
+      "pos": [
+        2672,
+        551
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 140
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "PREDICTION",
+          "links": [
+            141
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 38,
+      "type": "KSamplerSelect",
+      "pos": [
+        393,
+        1212
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            53
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "dpmpp_2m"
+      ]
+    },
+    {
+      "id": 39,
+      "type": "BasicScheduler",
+      "pos": [
+        392,
+        1323
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 55
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            56
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "normal",
+        40,
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "pos": [
+        386,
+        1476
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            94
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1080,
+        720,
+        2
+      ]
+    },
+    {
+      "id": 14,
+      "type": "ModelSamplingDiscrete",
+      "pos": [
+        10,
+        1222
+      ],
+      "size": {
+        "0": 315,
+        "1": 82
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            54,
+            55
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingDiscrete"
+      },
+      "widgets_values": [
+        "v_prediction",
+        true
+      ]
+    },
+    {
+      "id": 4,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -646,
+        454
+      ],
+      "size": {
+        "0": 358.83648681640625,
+        "1": 98
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            29
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            42
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            142
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "Fluffyrock-Unleashed-v1-0.safetensors"
+      ]
+    },
+    {
+      "id": 68,
+      "type": "Reroute",
+      "pos": [
+        -252,
+        1362
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 142,
+          "pos": [
+            37.5,
+            0
+          ],
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "VAE",
+          "links": [
+            130
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": true
+      }
+    },
+    {
+      "id": 28,
+      "type": "SamplerCustomPrediction",
+      "pos": [
+        2811,
+        772
+      ],
+      "size": {
+        "0": 405.5999755859375,
+        "1": 186
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 54
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 53
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 56
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 94
+        },
+        {
+          "name": "noise_prediction",
+          "type": "PREDICTION",
+          "link": 141
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            136
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomPrediction"
+      },
+      "widgets_values": [
+        true,
+        136364922716391,
+        "fixed"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        3261,
+        836
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 136,
+          "slot_index": 0
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 130
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            139
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 20,
+      "type": "PreviewImage",
+      "pos": [
+        3542,
+        836
+      ],
+      "size": {
+        "0": 1251.4755859375,
+        "1": 826.39794921875
+      },
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 139
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 61,
+      "type": "ScaledGuidancePrediction",
+      "pos": [
+        2243,
+        389
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guidance",
+          "type": "PREDICTION",
+          "link": 115,
+          "slot_index": 0
+        },
+        {
+          "name": "baseline",
+          "type": "PREDICTION",
+          "link": 110,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            140
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ScaledGuidancePrediction"
+      },
+      "widgets_values": [
+        8
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        394,
+        474
+      ],
+      "size": {
+        "0": 422.84503173828125,
+        "1": 164.31304931640625
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            75,
+            86,
+            91
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Positive Prompt",
+      "properties": {
+        "Node name for S&R": "CLIP Text Encode (Prompt)"
+      },
+      "widgets_values": [
+        "dragon, feral, male, solo, good quality, best quality, detailed scales, detailed, realistic, full-length portrait, gradient background, action pose"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        401,
+        706
+      ],
+      "size": {
+        "0": 425.27801513671875,
+        "1": 180.6060791015625
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            78,
+            87,
+            92
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Negative Prompt",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "bad quality, worst quality, anthro, text, signature, patreon logo, blurred background, genitals"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "CLIPTextEncode",
+      "pos": [
+        398,
+        947
+      ],
+      "size": {
+        "0": 425.2000427246094,
+        "1": 203.55630493164062
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            82,
+            93
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "title": "Empty Prompt",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 57,
+      "type": "PerpNegPrediction",
+      "pos": [
+        2246,
+        645
+      ],
+      "size": {
+        "0": 315,
+        "1": 122
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 91
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 92
+        },
+        {
+          "name": "empty",
+          "type": "CONDITIONING",
+          "link": 93
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PerpNegPrediction"
+      },
+      "widgets_values": [
+        8,
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      25,
+      25,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      26,
+      25,
+      0,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      29,
+      4,
+      0,
+      24,
+      0,
+      "MODEL"
+    ],
+    [
+      30,
+      24,
+      0,
+      14,
+      0,
+      "MODEL"
+    ],
+    [
+      34,
+      25,
+      0,
+      23,
+      0,
+      "CLIP"
+    ],
+    [
+      42,
+      4,
+      1,
+      24,
+      1,
+      "CLIP"
+    ],
+    [
+      53,
+      38,
+      0,
+      28,
+      1,
+      "SAMPLER"
+    ],
+    [
+      54,
+      14,
+      0,
+      28,
+      0,
+      "MODEL"
+    ],
+    [
+      55,
+      14,
+      0,
+      39,
+      0,
+      "MODEL"
+    ],
+    [
+      56,
+      39,
+      0,
+      28,
+      2,
+      "SIGMAS"
+    ],
+    [
+      75,
+      6,
+      0,
+      52,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      78,
+      7,
+      0,
+      53,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      82,
+      23,
+      0,
+      54,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      86,
+      6,
+      0,
+      56,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      87,
+      7,
+      0,
+      56,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      91,
+      6,
+      0,
+      57,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      92,
+      7,
+      0,
+      57,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      93,
+      23,
+      0,
+      57,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      94,
+      5,
+      0,
+      28,
+      3,
+      "LATENT"
+    ],
+    [
+      100,
+      53,
+      0,
+      58,
+      0,
+      "PREDICTION"
+    ],
+    [
+      101,
+      54,
+      0,
+      58,
+      1,
+      "PREDICTION"
+    ],
+    [
+      102,
+      52,
+      0,
+      59,
+      0,
+      "PREDICTION"
+    ],
+    [
+      103,
+      54,
+      0,
+      59,
+      1,
+      "PREDICTION"
+    ],
+    [
+      110,
+      54,
+      0,
+      61,
+      1,
+      "PREDICTION"
+    ],
+    [
+      113,
+      59,
+      0,
+      62,
+      0,
+      "PREDICTION"
+    ],
+    [
+      114,
+      58,
+      0,
+      62,
+      1,
+      "PREDICTION"
+    ],
+    [
+      115,
+      62,
+      0,
+      61,
+      0,
+      "PREDICTION"
+    ],
+    [
+      116,
+      24,
+      1,
+      25,
+      0,
+      "*"
+    ],
+    [
+      130,
+      68,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      136,
+      28,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      139,
+      8,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ],
+    [
+      140,
+      61,
+      0,
+      72,
+      0,
+      "*"
+    ],
+    [
+      141,
+      72,
+      0,
+      28,
+      4,
+      "PREDICTION"
+    ],
+    [
+      142,
+      4,
+      2,
+      68,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Choose",
+      "bounding": [
+        2226,
+        313,
+        531,
+        468
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    },
+    {
+      "title": "add node > sampling > prediction",
+      "bounding": [
+        918,
+        107,
+        1269,
+        366
+      ],
+      "color": "#3f789e",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
