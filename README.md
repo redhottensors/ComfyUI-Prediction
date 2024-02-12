@@ -31,6 +31,8 @@ All other predictions can be implemeted in terms of these two nodes. However, it
 **Scale Prediction** - Linearly scales a prediction.<br>
 ``prediction * scale``
 
+**Conditioned Prediction** - Evaluate your chosen model with a prompt (conditioning). You need to pick a unique conditioning name like "positive", "negative", or "empty". (The names are arbitrary but may evenutally effect ControlNet if/when it's implemented.)
+
 ## Convinence Nodes
 **Scaled Guidance Prediction** - Combines a baseline prediction with a scaled guidance prediction, similar to CFG.<br>
 ``baseline + guidance * scale``
