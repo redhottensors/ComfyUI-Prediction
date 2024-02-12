@@ -27,7 +27,7 @@ All other predictions can be implemeted in terms of these nodes. However, it may
 
 **Conditioned Prediction** - Evaluate your chosen model with a prompt (conditioning). You need to pick a unique conditioning name like "positive", "negative", or "empty". (The names are arbitrary and you can choose any name, but the names may evenutally interact with ControlNet if/when it's implemented.)
 
-**Combine Predictions** - Operates on two predictions. Supports add (+), sutract (-), multiply (*), divide (/), vector projection (proj), vector rejection (oproj), average (avg), min, and max.<br>
+**Combine Predictions** - Operates on two predictions. Supports add (+), sutract (-), multiply (*), divide (/), vector projection (proj), vector rejection (oproj), min, and max.<br>
 ``prediction_A <operation> prediction_B``
 
 **Scale Prediction** - Linearly scales a prediction.<br>
