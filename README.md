@@ -23,7 +23,7 @@ Follow these steps for fully custom prediction:
 # Predictors
 
 ## Primitive Nodes
-All other predictions can be implemeted in terms of these two nodes. However, it may get a little messy.
+All other predictions can be implemeted in terms of these nodes. However, it may get a little messy.
 
 **Combine Predictions** - Operates on two predictions. Supports add (+), sutract (-), multiply (*), divide (/), vector projection (proj), vector rejection (oproj), average (avg), min, and max.<br>
 ``prediction_A <operation> prediction_B``
