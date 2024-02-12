@@ -6,7 +6,7 @@ Fully customizable Classifier Free Guidance for [ComfyUI](https://github.com/com
 Copyright 2024 by @RedHotTensors and released by [Project RedRocket](https://huggingface.co/RedRocket).
 
 # Installation
-Clone this repo into ``ComfyUI/custom_nodes`` or use the Manager's "Install via Git URL" option.
+Clone this repo into ``ComfyUI/custom_nodes`` ~~or use the Manager's "Install via Git URL" option~~ (currently broken: https://github.com/ltdrdata/ComfyUI-Manager/pull/407).
 
 (Optional) If you want beautiful teal PREDICTION edges like the example apply [patches/colorPalette.js.patch](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/patches/colorPalette.js.patch) to ``ComfyUI/web/extensions/core/colorPalette.js``.
 
