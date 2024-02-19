@@ -48,6 +48,8 @@ class SamplerCustomPrediction:
         latent_samples = latent_image["samples"]
 
         if not add_noise:
+            torch.manual_seed(noise_seed)
+
             noise = torch.zeros(
                 latent_samples.size(),
                 dtype=latent_samples.dtype,
