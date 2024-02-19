@@ -1,10 +1,10 @@
 {
     "SamplerCustomPrediction":"",
-    "ConditionedPredictor":"",
-    "CombinePredictor":"",
-    "ScaledGuidancePredictor":"",
-    "AvoidErasePredictor":"",
-    "ScalePredictor":"",
-    "CFGPredictor":"",
-    "PerpNegPredictor":""
+    "ConditionedPrediction":"",
+    "CombinePredictions":"",
+    "ScaledGuidancePrediction":"",
+    "AvoidErasePrediction":"",
+    "ScalePrediction":"",
+    "CFGPrediction":"",
+    "PerpNegPrediction":""
 }
