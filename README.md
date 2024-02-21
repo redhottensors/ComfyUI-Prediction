@@ -46,7 +46,7 @@ All other predictions can be implemented in terms of these nodes. However, it ma
 
 **Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. This is also implemented less flexibly in vanilla ComfyUI under <ins>_for_testing > Perp-Neg</ins>.<br>
 ``pos_ind = positive - empty; neg_ind = negative - empty``<br>
-``(pos_ind - (pos_ind proj neg_ind) * neg_scale) * cfg_scale + empty``
+``(pos_ind - (neg_ind oproj pos_ind) * neg_scale) * cfg_scale + empty``
 
 # Limitations
 ControlNet is not supported at this time.
