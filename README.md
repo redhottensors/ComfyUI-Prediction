@@ -44,7 +44,7 @@ All other predictions can be implemented in terms of these nodes. However, it ma
 **CFG Prediction** - Vanilla Classifer Free Guidance (CFG) with a postive prompt and a negative/empty prompt.<br>
 ``(positive - negative) * cfg_scale + negative``
 
-**Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. This is also implemented less flexibly in vanilla ComfyUI under <ins>_for_testing > Perp-Neg</ins>.<br>
+**Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. (The built-in ComfyUI Perp-Neg node is [incorrectly implemented](https://github.com/comfyanonymous/ComfyUI/issues/2858).)<br>
 ``pos_ind = positive - empty; neg_ind = negative - empty``<br>
 ``(pos_ind - (neg_ind oproj pos_ind) * neg_scale) * cfg_scale + empty``
 
