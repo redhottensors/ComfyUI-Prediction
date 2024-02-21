@@ -562,7 +562,7 @@ class PerpNegPredictor(CachingNoisePredictor):
 
         positive = cond - empty
         negative = uncond - empty
-        perp_neg = proj(positive, negative) * self.neg_scale
+        perp_neg = oproj(negative, positive) * self.neg_scale
         return empty + (positive - perp_neg) * self.cfg_scale
 
 NODE_CLASS_MAPPINGS = {
