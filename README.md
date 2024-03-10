@@ -1,7 +1,7 @@
 # ComfyUI-Prediction
 Fully customizable Classifier Free Guidance for [ComfyUI](https://github.com/comfyanonymous/ComfyUI).
 
-![Custom Prediction](examples/example_1.png)
+![Avoid and Erase Workflow](examples/avoid_and_erase.png)
 
 Copyright 2024 by @RedHotTensors and released by [Project RedRocket](https://huggingface.co/RedRocket).
 
@@ -11,7 +11,7 @@ Clone this repo into ``ComfyUI/custom_nodes`` or use [ComfyUI-Manager](https://g
 (Optional) If you want beautiful teal PREDICTION edges like the example apply [patches/colorPalette.js.patch](https://raw.githubusercontent.com/redhottensors/ComfyUI-Prediction/main/patches/colorPalette.js.patch) to ``ComfyUI/web/extensions/core/colorPalette.js``.
 
 # Usage
-All custom nodes are provided under <ins>Add Node > sampling > prediction</ins>. An example workflow is in ``examples/custom_prediction.json``.
+All custom nodes are provided under <ins>Add Node > sampling > prediction</ins>. An example workflow is in ``examples/avoid_and_erase.json``.
 
 Follow these steps for fully custom prediction:
 1. You will need to use the <ins>sampling > prediction > Sample Predictions</ins> node as your sampler.

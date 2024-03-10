@@ -3,143 +3,6 @@
   "last_link_id": 142,
   "nodes": [
     {
-      "id": 59,
-      "type": "CombinePredictions",
-      "pos": [
-        1413,
-        181
-      ],
-      "size": {
-        "0": 315,
-        "1": 78
-      },
-      "flags": {},
-      "order": 17,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "prediction_A",
-          "type": "PREDICTION",
-          "link": 102,
-          "slot_index": 0
-        },
-        {
-          "name": "prediction_B",
-          "type": "PREDICTION",
-          "link": 103,
-          "slot_index": 1
-        }
-      ],
-      "outputs": [
-        {
-          "name": "prediction",
-          "type": "PREDICTION",
-          "links": [
-            113
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CombinePredictions"
-      },
-      "widgets_values": [
-        "A oproj B"
-      ]
-    },
-    {
-      "id": 62,
-      "type": "AvoidErasePrediction",
-      "pos": [
-        1847,
-        213
-      ],
-      "size": {
-        "0": 330,
-        "1": 102
-      },
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "guidance",
-          "type": "PREDICTION",
-          "link": 113
-        },
-        {
-          "name": "avoid_and_erase",
-          "type": "PREDICTION",
-          "link": 114
-        }
-      ],
-      "outputs": [
-        {
-          "name": "prediction",
-          "type": "PREDICTION",
-          "links": [
-            115
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "AvoidErasePrediction"
-      },
-      "widgets_values": [
-        1.05,
-        0.2
-      ]
-    },
-    {
-      "id": 58,
-      "type": "CombinePredictions",
-      "pos": [
-        1410,
-        318
-      ],
-      "size": {
-        "0": 315,
-        "1": 78
-      },
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "prediction_A",
-          "type": "PREDICTION",
-          "link": 100,
-          "slot_index": 0
-        },
-        {
-          "name": "prediction_B",
-          "type": "PREDICTION",
-          "link": 101,
-          "slot_index": 1
-        }
-      ],
-      "outputs": [
-        {
-          "name": "prediction",
-          "type": "PREDICTION",
-          "links": [
-            114
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CombinePredictions"
-      },
-      "widgets_values": [
-        "A oproj B"
-      ]
-    },
-    {
       "id": 25,
       "type": "Reroute",
       "pos": [
@@ -233,50 +96,11 @@
       ]
     },
     {
-      "id": 52,
-      "type": "ConditionedPrediction",
-      "pos": [
-        928,
-        182
-      ],
-      "size": {
-        "0": 315,
-        "1": 58
-      },
-      "flags": {},
-      "order": 11,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "conditioning",
-          "type": "CONDITIONING",
-          "link": 75
-        }
-      ],
-      "outputs": [
-        {
-          "name": "prediction",
-          "type": "PREDICTION",
-          "links": [
-            102
-          ],
-          "shape": 3,
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ConditionedPrediction"
-      },
-      "widgets_values": [
-        "positive"
-      ]
-    },
-    {
       "id": 53,
       "type": "ConditionedPrediction",
       "pos": [
-        933,
-        294
+        929.7399340820311,
+        295.41999908447264
       ],
       "size": {
         "0": 315,
@@ -314,8 +138,8 @@
       "id": 54,
       "type": "ConditionedPrediction",
       "pos": [
-        929,
-        405
+        925.7399340820311,
+        406.41999908447264
       ],
       "size": {
         "0": 315,
@@ -665,73 +489,6 @@
       }
     },
     {
-      "id": 28,
-      "type": "SamplerCustomPrediction",
-      "pos": [
-        2811,
-        772
-      ],
-      "size": {
-        "0": 405.5999755859375,
-        "1": 186
-      },
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 54
-        },
-        {
-          "name": "sampler",
-          "type": "SAMPLER",
-          "link": 53
-        },
-        {
-          "name": "sigmas",
-          "type": "SIGMAS",
-          "link": 56
-        },
-        {
-          "name": "latent_image",
-          "type": "LATENT",
-          "link": 94
-        },
-        {
-          "name": "noise_prediction",
-          "type": "PREDICTION",
-          "link": 141
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "type": "LATENT",
-          "links": [
-            136
-          ],
-          "shape": 3,
-          "slot_index": 0
-        },
-        {
-          "name": "denoised_output",
-          "type": "LATENT",
-          "links": null,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "SamplerCustomPrediction"
-      },
-      "widgets_values": [
-        true,
-        136364922716391,
-        "fixed"
-      ]
-    },
-    {
       "id": 8,
       "type": "VAEDecode",
       "pos": [
@@ -1012,6 +769,249 @@
       "widgets_values": [
         8,
         1
+      ]
+    },
+    {
+      "id": 58,
+      "type": "CombinePredictions",
+      "pos": [
+        1406.7399340820311,
+        319.41999908447264
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prediction_A",
+          "type": "PREDICTION",
+          "link": 100,
+          "slot_index": 0
+        },
+        {
+          "name": "prediction_B",
+          "type": "PREDICTION",
+          "link": 101,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            114
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CombinePredictions"
+      },
+      "widgets_values": [
+        "A - B"
+      ]
+    },
+    {
+      "id": 62,
+      "type": "AvoidErasePrediction",
+      "pos": [
+        1837.7399340820311,
+        234.41999908447266
+      ],
+      "size": {
+        "0": 330,
+        "1": 102
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "guidance",
+          "type": "PREDICTION",
+          "link": 113
+        },
+        {
+          "name": "avoid_and_erase",
+          "type": "PREDICTION",
+          "link": 114
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            115
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "AvoidErasePrediction"
+      },
+      "widgets_values": [
+        1,
+        0.1
+      ]
+    },
+    {
+      "id": 59,
+      "type": "CombinePredictions",
+      "pos": [
+        1409.7399340820311,
+        182.41999908447266
+      ],
+      "size": {
+        "0": 315,
+        "1": 78
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prediction_A",
+          "type": "PREDICTION",
+          "link": 102,
+          "slot_index": 0
+        },
+        {
+          "name": "prediction_B",
+          "type": "PREDICTION",
+          "link": 103,
+          "slot_index": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            113
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CombinePredictions"
+      },
+      "widgets_values": [
+        "A - B"
+      ]
+    },
+    {
+      "id": 52,
+      "type": "ConditionedPrediction",
+      "pos": [
+        924.7399340820311,
+        183.41999908447266
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 75
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prediction",
+          "type": "PREDICTION",
+          "links": [
+            102
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConditionedPrediction"
+      },
+      "widgets_values": [
+        "positive"
+      ]
+    },
+    {
+      "id": 28,
+      "type": "SamplerCustomPrediction",
+      "pos": [
+        2811,
+        772
+      ],
+      "size": {
+        "0": 405.5999755859375,
+        "1": 186
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 54
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 53
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 56
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 94
+        },
+        {
+          "name": "noise_prediction",
+          "type": "PREDICTION",
+          "link": 141
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            136
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomPrediction"
+      },
+      "widgets_values": [
+        true,
+        1,
+        "fixed"
       ]
     }
   ],
@@ -1302,10 +1302,10 @@
       "font_size": 24
     },
     {
-      "title": "add node > sampling > prediction",
+      "title": "Avoid and Erase Workflow (add node > sampling > prediction)",
       "bounding": [
-        918,
-        107,
+        914,
+        109,
         1269,
         366
       ],
