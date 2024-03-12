@@ -335,13 +335,20 @@ class ScaledGuidancePredictor(NoisePredictor):
                 "min": 0.0,
                 "max": 100.0,
             }),
+            "rescale": ("FLOAT", {
+                "default": 0.0,
+                "step": 0.1,
+                "min": 0.0,
+                "max": 100.0,
+            }),
         }
     }
 
-    def __init__(self, guidance, baseline, guidance_scale):
+    def __init__(self, guidance, baseline, guidance_scale, rescale):
         self.lhs = guidance
         self.rhs = baseline
         self.scale = guidance_scale
+        self.rescale = rescale
 
     def get_conds(self):
         return self.merge_conds(self.lhs.get_conds(), self.rhs.get_conds())
@@ -355,7 +362,43 @@ class ScaledGuidancePredictor(NoisePredictor):
     def predict_noise(self, x, timestep, model, conds, model_options, seed):
         lhs = self.lhs.predict_noise(x, timestep, model, conds, model_options, seed)
         rhs = self.rhs.predict_noise(x, timestep, model, conds, model_options, seed)
-        return lhs * self.scale + rhs
+
+        def rescale_cfg(args):
+            cond = args["cond"]
+            uncond = args["uncond"]
+            cond_scale = args["cond_scale"]
+            sigma = args["sigma"]
+            sigma = sigma.view(sigma.shape[:1] + (1,) * (cond.ndim - 1))
+            x_orig = args["input"]
+
+            # rescale cfg has to be done on v-pred model output
+            x = x_orig / (sigma * sigma + 1.0)
+            cond = ((x - (x_orig - cond)) * (sigma**2 + 1.0) ** 0.5) / (sigma)
+            uncond = ((x - (x_orig - uncond)) * (sigma**2 + 1.0) ** 0.5) / (sigma)
+
+            # rescalecfg
+            x_cfg = uncond + cond_scale * (cond - uncond)
+            ro_pos = torch.std(cond, dim=(1, 2, 3), keepdim=True)
+            ro_cfg = torch.std(x_cfg, dim=(1, 2, 3), keepdim=True)
+
+            x_rescaled = x_cfg * (ro_pos / ro_cfg)
+            x_final = self.rescale * x_rescaled + (1.0 - self.rescale) * x_cfg
+
+            return x_orig - (x - x_final * sigma / (sigma * sigma + 1.0) ** 0.5)
+
+        args = {
+            "cond": x - (lhs + rhs),
+            "uncond": x - rhs,
+            "cond_scale": self.scale,
+            "timestep": timestep,
+            "input": x,
+            "sigma": timestep,
+            "cond_denoised": (lhs + rhs),
+            "uncond_denoised": rhs,
+            "model": model,
+            "model_options": model_options,
+        }
+        return x - rescale_cfg(args)
 
     def reset_cache(self):
         # reset_cache is fast and idempotent so this is fine
