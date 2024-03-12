@@ -364,25 +364,14 @@ class ScaledGuidancePredictor(NoisePredictor):
         rhs = self.rhs.predict_noise(x, sigma, model, conds, model_options, seed)
 
         sigma = sigma.view(sigma.shape[:1] + (1,) * (lhs.ndim - 1))
-        total_var = sigma.square() + 1.0
-        total_sigma = total_var.sqrt()
-        snr = sigma / total_sigma
-        inv_snr = total_sigma / sigma
-
-        # rescale cfg has to be done on v-pred model output
-        x_mod = x / total_var
-        cond = (x_mod - lhs - rhs) * inv_snr
-        uncond = (x_mod - rhs) * inv_snr
-
-        # rescalecfg
-        x_cfg = uncond + self.scale * (cond - uncond)
-        ro_pos = torch.std(cond, dim=(1, 2, 3), keepdim=True)
+        x_scaled = x * (1. / (sigma.square() + 1.0))
+        x_cfg = x_scaled - rhs - self.scale * lhs
+        ro_pos = torch.std(x_scaled - (lhs + rhs), dim=(1, 2, 3), keepdim=True)
         ro_cfg = torch.std(x_cfg, dim=(1, 2, 3), keepdim=True)
-
         x_rescaled = x_cfg * (ro_pos / ro_cfg)
-        x_final = self.rescale * x_rescaled + (1.0 - self.rescale) * x_cfg
+        x_final = torch.lerp(x_cfg, x_rescaled, self.rescale)
 
-        return x_mod - x_final * snr
+        return x_scaled - x_final
 
     def reset_cache(self):
         # reset_cache is fast and idempotent so this is fine
