@@ -364,11 +364,15 @@ class ScaledGuidancePredictor(NoisePredictor):
         rhs = self.rhs.predict_noise(x, sigma, model, conds, model_options, seed)
 
         sigma = sigma.view(sigma.shape[:1] + (1,) * (lhs.ndim - 1))
+        total_var = sigma.square() + 1.0
+        total_sigma = total_var.sqrt()
+        snr = sigma / total_sigma
+        inv_snr = total_sigma / sigma
 
         # rescale cfg has to be done on v-pred model output
-        x_mod = x / (sigma * sigma + 1.0)
-        cond = ((x_mod - lhs - rhs) * (sigma**2 + 1.0) ** 0.5) / (sigma)
-        uncond = ((x_mod - rhs) * (sigma**2 + 1.0) ** 0.5) / (sigma)
+        x_mod = x / total_var
+        cond = (x_mod - lhs - rhs) * inv_snr
+        uncond = (x_mod - rhs) * inv_snr
 
         # rescalecfg
         x_cfg = uncond + self.scale * (cond - uncond)
@@ -378,7 +382,7 @@ class ScaledGuidancePredictor(NoisePredictor):
         x_rescaled = x_cfg * (ro_pos / ro_cfg)
         x_final = self.rescale * x_rescaled + (1.0 - self.rescale) * x_cfg
 
-        return x_mod - x_final * sigma / (sigma * sigma + 1.0) ** 0.5
+        return x_mod - x_final * snr
 
     def reset_cache(self):
         # reset_cache is fast and idempotent so this is fine
