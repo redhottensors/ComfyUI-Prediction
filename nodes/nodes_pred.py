@@ -335,20 +335,20 @@ class ScaledGuidancePredictor(NoisePredictor):
                 "min": 0.0,
                 "max": 100.0,
             }),
-            "rescale_multiplier": ("FLOAT", {
-                "default": 0.0, 
-                "min": 0.0, 
-                "max": 1.0, 
-                "step": 0.01
+            "stddev_rescale": ("FLOAT", {
+                "default": 0.0,
+                "step": 0.1,
+                "min": 0.0,
+                "max": 1.0,
             }),
         }
     }
 
-    def __init__(self, guidance, baseline, guidance_scale, rescale_multiplier):
+    def __init__(self, guidance, baseline, guidance_scale, stddev_rescale):
         self.lhs = guidance
         self.rhs = baseline
         self.scale = guidance_scale
-        self.rescale_multiplier = rescale_multiplier
+        self.rescale = stddev_rescale
 
     def get_conds(self):
         return self.merge_conds(self.lhs.get_conds(), self.rhs.get_conds())
@@ -360,21 +360,28 @@ class ScaledGuidancePredictor(NoisePredictor):
         return {self} | self.lhs.get_preds() | self.rhs.get_preds()
 
     def predict_noise(self, x, sigma, model, conds, model_options, seed):
-        lhs = self.lhs.predict_noise(x, sigma, model, conds, model_options, seed)
-        rhs = self.rhs.predict_noise(x, sigma, model, conds, model_options, seed)
+        g = self.lhs.predict_noise(x, sigma, model, conds, model_options, seed)
+        b = self.rhs.predict_noise(x, sigma, model, conds, model_options, seed)
 
-        if self.rescale_multiplier <= 0.0:
-            return lhs * self.scale + rhs
+        if self.rescale <= 0.0:
+            return g * self.scale + b
 
-        sigma = sigma.view(sigma.shape[:1] + (1,) * (lhs.ndim - 1))
-        x_scaled = x * (1. / (sigma.square() + 1.0))
-        x_cfg = x_scaled - rhs - self.scale * lhs
-        ro_pos = torch.std(x_scaled - (lhs + rhs), dim=(1, 2, 3), keepdim=True)
-        ro_cfg = torch.std(x_cfg, dim=(1, 2, 3), keepdim=True)
-        x_rescaled = x_cfg * (ro_pos / ro_cfg)
-        x_final = torch.lerp(x_cfg, x_rescaled, self.rescale_multiplier)
+        # CFG Rescale https://arxiv.org/pdf/2305.08891.pdf Sec. 3.4
+        # Originally in eps -> v space, but now very clean in x0 thanks to Gaeros.
 
-        return x_scaled - x_final
+        sigma = sigma.view(sigma.shape[:1] + (1,) * (b.ndim - 1))
+        x_norm = x * (1. / (sigma.square() + 1.0))
+
+        x0 = x_norm - (g + b)
+        x0_cfg = x_norm - (g * self.scale + b)
+
+        std_x0 = torch.std(x0, dim=(1, 2, 3), keepdim=True)
+        std_x0_cfg = torch.std(x0_cfg, dim=(1, 2, 3), keepdim=True)
+
+        x0_cfg_norm = x0_cfg * (std_x0 / std_x0_cfg)
+        x0_rescaled = torch.lerp(x0_cfg, x0_cfg_norm, self.rescale)
+
+        return x_norm - x0_rescaled
 
     def reset_cache(self):
         # reset_cache is fast and idempotent so this is fine
