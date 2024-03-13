@@ -33,15 +33,17 @@ All other predictions can be implemented in terms of these nodes. However, it ma
 **Scale Prediction** - Linearly scales a prediction.<br>
 ``prediction * scale``
 
+**Scaled Guidance Prediction** - Combines a baseline prediction with a scaled guidance prediction using optional standard deviation rescaling, similar to CFG.<br>
+Without stddev_rescale: ``baseline + guidance * scale``<br>
+With stddev_rescale: [See §3.4 of this paper.](https://arxiv.org/pdf/2305.08891.pdf) As usual, start out around 0.7 and tune from there.
+
 ## Convinence Nodes
-**Scaled Guidance Prediction** - Combines a baseline prediction with a scaled guidance prediction, similar to CFG.<br>
-``baseline + guidance * scale``
 
 **Avoid and Erase Prediction** - Re-aligns a desirable (positive) prediction called *guidance* away from an undesirable (negative) prediction called *avoid_and_erase*, and erases some of the negative prediction as well.<br>
 ``guidance - (guidance proj avoid_and_erase) * avoid_scale - avoid_and_erase * erase_scale``
 
 ## Prebuilt Nodes
-**CFG Prediction** - Vanilla Classifer Free Guidance (CFG) with a postive prompt and a negative/empty prompt.<br>
+**CFG Prediction** - Vanilla Classifer Free Guidance (CFG) with a postive prompt and a negative/empty prompt. Does not support CFG rescale.<br>
 ``(positive - negative) * cfg_scale + negative``
 
 **Perp-Neg Prediction** - Implements https://arxiv.org/abs/2304.04968. (The built-in ComfyUI Perp-Neg node is [incorrectly implemented](https://github.com/comfyanonymous/ComfyUI/issues/2858).)<br>
