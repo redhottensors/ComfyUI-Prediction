@@ -1,7 +1,8 @@
+import sys
+
 import comfy
 import torch
 import latent_preview
-import sys
 
 class CustomNoisePredictor(torch.nn.Module):
     def __init__(self, model, pred, conds):
@@ -15,11 +16,9 @@ class CustomNoisePredictor(torch.nn.Module):
         self.pred.reset_cache() # cheap, just in case
 
         try:
-            pred = self.pred.predict_noise(x, timestep, self.inner_model, self.conds, model_options, seed)
+            return self.pred.predict_noise(x, timestep, self.inner_model, self.conds, model_options, seed)
         finally:
             self.pred.reset_cache()
-
-        return pred
 
     def forward(self, *args, **kwargs):
         return self.apply_model(*args, **kwargs)
@@ -179,7 +178,7 @@ class NoisePredictor:
         return 0
 
     def predict_noise(self, x, timestep, model, conds, model_options, seed):
-        raise Exception("not implemented")
+        raise NotImplementedError
 
     def reset_cache(self):
         """Transitively resets all cached predictions."""
@@ -206,7 +205,7 @@ class NoisePredictor:
                 if name not in merged:
                     merged[name] = cond
                 elif merged[name] != cond:
-                    raise Exception(f"Conditioning \"{name}\" is not unique.")
+                    raise RuntimeError(f"Conditioning \"{name}\" is not unique.")
 
         return merged
 
@@ -221,7 +220,7 @@ class CachingNoisePredictor(NoisePredictor):
         return self.cached_prediction
 
     def predict_noise_uncached(self, x, timestep, model, conds, model_options, seed):
-        raise Exception("not implemented")
+        raise NotImplementedError
 
     def reset_cache(self):
         self.cached_prediction = None
@@ -238,6 +237,8 @@ class ConditionedPredictor(CachingNoisePredictor):
     }
 
     def __init__(self, conditioning, name):
+        super().__init__()
+
         self.cond = comfy.sample.convert_cond(conditioning)
         self.cond_name = name
 
@@ -390,6 +391,7 @@ class ScaledGuidancePredictor(NoisePredictor):
 
 class AvoidErasePredictor(NoisePredictor):
     """Implements A - ((A proj B) * avoid_scale) - (B * erase_scale)"""
+
     INPUTS = {
         "required": {
             "guidance": ("PREDICTION",),
@@ -498,6 +500,8 @@ class CFGPredictor(CachingNoisePredictor):
     }
 
     def __init__(self, positive, negative, cfg_scale):
+        super().__init__()
+
         self.positive = comfy.sample.convert_cond(positive)
         self.negative = comfy.sample.convert_cond(negative)
         self.cfg_scale = cfg_scale
@@ -548,6 +552,8 @@ class PerpNegPredictor(CachingNoisePredictor):
     }
 
     def __init__(self, positive, negative, empty, cfg_scale, neg_scale):
+        super().__init__()
+
         self.positive = comfy.sample.convert_cond(positive)
         self.negative = comfy.sample.convert_cond(negative)
         self.empty = comfy.sample.convert_cond(empty)
