@@ -5,20 +5,26 @@ import torch
 import latent_preview
 
 class CustomNoisePredictor(torch.nn.Module):
-    def __init__(self, model, pred, conds):
+    def __init__(self, model, pred, preds, conds):
         super().__init__()
 
         self.inner_model = model
         self.pred = pred
+        self.preds = preds
         self.conds = conds
 
-    def apply_model(self, x, timestep, cond, uncond, cond_scale, model_options={}, seed=None):
-        self.pred.reset_cache() # cheap, just in case
+    def apply_model(self, x, timestep, cond, uncond, cond_scale, model_options=None, seed=None):
+        if model_options is None:
+            model_options = {}
+
+        for pred in self.preds:
+            pred.begin_sample()
 
         try:
             return self.pred.predict_noise(x, timestep, self.inner_model, self.conds, model_options, seed)
         finally:
-            self.pred.reset_cache()
+            for pred in self.preds:
+                pred.end_sample()
 
     def forward(self, *args, **kwargs):
         return self.apply_model(*args, **kwargs)
@@ -145,13 +151,21 @@ def sample_pred(model, noise, predictor, sampler, sigmas, latent, noise_mask=Non
 
     # TODO: support controlnet how?
 
-    predictor_model = CustomNoisePredictor(model.model, predictor, conds)
+    predictor_model = CustomNoisePredictor(model.model, predictor, preds, conds)
     extra_args = {
         "cond": None, "uncond": None, "cond_scale": None,
         "model_options": model.model_options, "seed": seed
     }
 
-    samples = sampler.sample(predictor_model, sigmas, extra_args, callback, noise, latent, noise_mask, disable_pbar)
+    for pred in preds:
+        pred.begin_sampling()
+
+    try:
+        samples = sampler.sample(predictor_model, sigmas, extra_args, callback, noise, latent, noise_mask, disable_pbar)
+    finally:
+        for pred in preds:
+            pred.end_sampling()
+
     samples = model.model.process_latent_out(samples.to(torch.float32))
     samples = samples.to(comfy.model_management.intermediate_device())
 
@@ -180,8 +194,20 @@ class NoisePredictor:
     def predict_noise(self, x, timestep, model, conds, model_options, seed):
         raise NotImplementedError
 
-    def reset_cache(self):
-        """Transitively resets all cached predictions."""
+    def begin_sampling(self):
+        """Called when sampling begins for a batch."""
+        pass
+
+    def begin_sample(self):
+        """Called when one sampling step begins."""
+        pass
+
+    def end_sample(self):
+        """Called when one sampling step ends."""
+        pass
+
+    def end_sampling(self):
+        """Called when sampling completes for a batch."""
         pass
 
     def get_models_from_conds(self):
@@ -222,7 +248,10 @@ class CachingNoisePredictor(NoisePredictor):
     def predict_noise_uncached(self, x, timestep, model, conds, model_options, seed):
         raise NotImplementedError
 
-    def reset_cache(self):
+    def begin_sample(self):
+        self.cached_prediction = None
+
+    def end_sample(self):
         self.cached_prediction = None
 
 class ConditionedPredictor(CachingNoisePredictor):
@@ -319,10 +348,6 @@ class CombinePredictor(NoisePredictor):
         rhs = self.rhs.predict_noise(x, timestep, model, conds, model_options, seed)
         return self.op(lhs, rhs)
 
-    def reset_cache(self):
-        # reset_cache is fast and idempotent so this is fine
-        self.lhs.reset_cache()
-        self.rhs.reset_cache()
 
 class ScaledGuidancePredictor(NoisePredictor):
     """Implements A * scale + B"""
@@ -384,11 +409,6 @@ class ScaledGuidancePredictor(NoisePredictor):
 
         return x_norm - x0_rescaled
 
-    def reset_cache(self):
-        # reset_cache is fast and idempotent so this is fine
-        self.lhs.reset_cache()
-        self.rhs.reset_cache()
-
 class AvoidErasePredictor(NoisePredictor):
     """Implements A - ((A proj B) * avoid_scale) - (B * erase_scale)"""
 
@@ -430,11 +450,6 @@ class AvoidErasePredictor(NoisePredictor):
         lhs = self.lhs.predict_noise(x, timestep, model, conds, model_options, seed)
         rhs = self.rhs.predict_noise(x, timestep, model, conds, model_options, seed)
         return lhs - (proj(lhs, rhs) * self.avoid_scale) - (rhs * self.erase_scale)
-
-    def reset_cache(self):
-        # reset_cache is fast and idempotent so this is fine
-        self.lhs.reset_cache()
-        self.rhs.reset_cache()
 
 def dot(a, b):
     return (a * b).sum(dim=(1, 2, 3), keepdims=True)
@@ -481,9 +496,6 @@ class ScalePredictor(NoisePredictor):
 
     def predict_noise(self, x, timestep, model, conds, model_options, seed):
         return self.inner.predict_noise(x, timestep, model, conds, model_options, seed) * self.scale
-
-    def reset_cache(self):
-        self.inner.reset_cache()
 
 class CFGPredictor(CachingNoisePredictor):
     INPUTS = {
