@@ -37,6 +37,9 @@ All other predictions can be implemented in terms of these nodes. However, it ma
 Without stddev_rescale: ``baseline + guidance * scale``<br>
 With stddev_rescale: [See §3.4 of this paper.](https://arxiv.org/pdf/2305.08891.pdf) As usual, start out around 0.7 and tune from there.
 
+**Switch Predictions** - Switches from one prediction to another one based on the timestep sigma. Use <ins>sampling > custom_sampling > sigmas > Split Sigmas</ins> to create a sub-range of timestep sigmas.<br>
+``prediction_B when current_sigma in sigmas_B otherwise prediction_A``
+
 ## Convinence Nodes
 
 **Avoid and Erase Prediction** - Re-aligns a desirable (positive) prediction called *guidance* away from an undesirable (negative) prediction called *avoid_and_erase*, and erases some of the negative prediction as well.<br>
