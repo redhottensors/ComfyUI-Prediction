@@ -2,6 +2,7 @@
     "SamplerCustomPrediction":"",
     "ConditionedPrediction":"",
     "CombinePredictions":"",
+    "SwitchPredictions":"",
     "ScaledGuidancePrediction":"",
     "AvoidErasePrediction":"",
     "ScalePrediction":"",

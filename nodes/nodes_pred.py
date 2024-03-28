@@ -348,6 +348,60 @@ class CombinePredictor(NoisePredictor):
         rhs = self.rhs.predict_noise(x, timestep, model, conds, model_options, seed)
         return self.op(lhs, rhs)
 
+class SwitchPredictor(NoisePredictor):
+    """Switches predictions for specified sigmas"""
+    INPUTS = {
+        "required": {
+            "prediction_A": ("PREDICTION",),
+            "prediction_B": ("PREDICTION",),
+            "sigmas_B": ("SIGMAS",),
+        }
+    }
+
+    def __init__(self, prediction_A, prediction_B, sigmas_B):
+        self.lhs = prediction_A
+        self.rhs = prediction_B
+        self.sigmas = sigmas_B
+
+    def get_conds(self):
+        return self.merge_conds(self.lhs.get_conds(), self.rhs.get_conds())
+
+    def get_models(self):
+        return self.lhs.get_models() | self.rhs.get_models()
+
+    def get_preds(self):
+        return {self} | self.lhs.get_preds() | self.rhs.get_preds()
+
+    def predict_noise(self, x, sigma, model, conds, model_options, seed):
+        rhs_mask = torch.isin(sigma.cpu(), self.sigmas)
+        lhs_inds = torch.argwhere(~rhs_mask).squeeze(1)
+        rhs_inds = torch.argwhere(rhs_mask).squeeze(1)
+
+        if len(lhs_inds) == 0:
+            return self.rhs.predict_noise(x, sigma, model, conds, model_options, seed)
+
+        if len(rhs_inds) == 0:
+            return self.lhs.predict_noise(x, sigma, model, conds, model_options, seed)
+
+        preds = torch.empty_like(x)
+        preds[lhs_inds] = self.lhs.predict_noise(
+            x[lhs_inds],
+            sigma[lhs_inds],
+            model,
+            conds,
+            model_options,
+            seed
+        )
+        preds[rhs_inds] = self.rhs.predict_noise(
+            x[rhs_inds],
+            sigma[rhs_inds],
+            model,
+            conds,
+            model_options,
+            seed
+        )
+
+        return preds
 
 class ScaledGuidancePredictor(NoisePredictor):
     """Implements A * scale + B"""
@@ -635,6 +689,7 @@ def make_node(predictor, display_name, class_name=None, category="sampling/predi
 
 make_node(ConditionedPredictor, "Conditioned Prediction")
 make_node(CombinePredictor, "Combine Predictions", class_name="CombinePredictions")
+make_node(SwitchPredictor, "Switch Predictions", class_name="SwitchPredictions")
 make_node(ScaledGuidancePredictor, "Scaled Guidance Prediction")
 make_node(AvoidErasePredictor, "Avoid and Erase Prediction")
 make_node(ScalePredictor, "Scale Prediction")
